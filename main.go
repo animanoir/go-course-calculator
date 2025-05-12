@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"fmt"
+	"fmt"
 	"go-course-calculator/prices"
 	//"go-course-calculator/filemanager"
 	"go-course-calculator/cmdmanager"
@@ -22,7 +22,11 @@ func main() {
 		// fm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
 		cmdm := cmdmanager.New()
 		priceJob := prices.NewTaxIncludedPriceJob(cmdm, taxRate)
-		priceJob.Process()
+		err := priceJob.Process()
+		if err != nil {
+			fmt.Println("could not process job")
+			fmt.Println(err)
+		}
 	}
 }
 
