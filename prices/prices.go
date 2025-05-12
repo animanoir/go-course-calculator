@@ -2,15 +2,15 @@ package prices
 
 import (
 	"fmt"
+	"go-course-calculator/iomanager"
 	"strconv"
-	"go-course-calculator/filemanager"
 )
 
 type TaxIncludedPriceJob struct {
-	IOManager filemanager.FileManager
-	TaxRate           float64
-	InputPrices       []float64
-	TaxIncludedPrices map[string]string
+	IOManager         iomanager.IOManager `json:"-"`        // This will tell the JSON package that this key and its value should be ignored.
+	TaxRate           float64             `json:"tax_rate"` // Adding this tags will tell the JSON package to writhe them instead of the real key.
+	InputPrices       []float64           `json:"input:prices"`
+	TaxIncludedPrices map[string]string   `json:"tax_included"`
 }
 
 func (job *TaxIncludedPriceJob) Process() {
@@ -47,9 +47,9 @@ func (job *TaxIncludedPriceJob) LoadData() {
 
 }
 
-func NewTaxIncludedPriceJob(fm filemanager.FileManager, taxRate float64) *TaxIncludedPriceJob {
+func NewTaxIncludedPriceJob(iom iomanager.IOManager, taxRate float64) *TaxIncludedPriceJob {
 	return &TaxIncludedPriceJob{
-		IOManager: fm,
+		IOManager:   iom,
 		InputPrices: []float64{10, 20, 30},
 		TaxRate:     taxRate,
 	}
